@@ -17,9 +17,10 @@ class Route
     {
         for (int i = 0; i < b.n; i++)
         {
-            cout << b.r[i] << " -> ";
+            a << b.r[i] << " -> ";
         }
-        cout << b.r[0];
+        a << b.r[0];
+        return a;
     }
 };
 

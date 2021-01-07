@@ -31,8 +31,8 @@ class String
     friend istream & operator>>(istream &r, String &s)
     {
         char *buf = new char[80];
-        cout<<"Введите строку, в конце Enter\n";
-        cin>>buf;
+        cout << "Введите строку, в конце Enter\n";
+        r >> buf;
         String q(buf);
         s = q;
         delete buf;
