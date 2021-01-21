@@ -317,7 +317,6 @@ void Array:: Heap_sort()
     {
         Shift2(a, m, i);
     }
-    
     for (size_t i = m - 1; i > 0; i--)
     {
         size_t q = a[0];
@@ -332,22 +331,15 @@ void Array:: Heap_sort()
 int main()
 {
 
-Array a(15000, 1, 10);
+Array a(50000, 1, 10000);
 Array b(a);
-// a.Quick_sort(0, 14);
-
-// if (a.Test(), !(a == b))
-// {
-//     perror("Error sort");
-//     return 1;
-// }
 
 Array c(a);
 Array d(a);
 Array e(a);
 
 int start = clock();
-b.Quick_sort(0, 14999);
+b.Quick_sort(0, 49999);
 int quick_end = clock();
 
 c.Heap_sort();

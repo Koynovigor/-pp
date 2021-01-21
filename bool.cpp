@@ -272,9 +272,9 @@ BoolM:: BoolM(int k, int l)
     m = k;                  // nbit – количество бит вектора   
     n = l;                  // m – количество элементов массива b
     v = new Boolv [k];
+    Boolv a(l);
     for (int i = 0; i < k; i++)
     {
-        Boolv a(l);
         v[i] = a;
     }
 }
@@ -299,6 +299,7 @@ BoolM BoolM:: operator = (BoolM &q)
     if (m != q.m)
     {
         m = q.m;
+        delete [] v;
         v = new Boolv [m];
     }
     n = q.n;
@@ -311,9 +312,9 @@ BoolM BoolM:: operator = (BoolM &q)
 
 void Topsort(BoolM &M, int m, int *a) 	 	// a – результат сортировки; Нет провреки на наличие цикла в графе
 {
-    Boolv A(m), v0(m), v1(m);
-    for (int i = 0; i < m; i++)
-    {
+    Boolv A(m), v0(m), v1(m);   // A - множество номеров не обработанных столбцов
+    for (int i = 0; i < m; i++) // v1 - дизъюнкция строк
+    {                           // v0 - хранитель обработанных вершин
         A.Set1(i);
     }
     int q = 0;
@@ -330,6 +331,7 @@ void Topsort(BoolM &M, int m, int *a) 	 	// a – результат сорти�
         }
         v0 | v1;
         ~v0;
+        int flag = 0;
         for (int i = 0; i < m; i++)
         {
             if (A[i] && v0[i])
@@ -337,7 +339,13 @@ void Topsort(BoolM &M, int m, int *a) 	 	// a – результат сорти�
                 A.Set0(i);
                 a[q] = i + 1;
                 q++;
+                flag ++;
             }
+        }
+        if (!flag)
+        {
+            cout << "Error";
+            return;  
         }
     } 
 }

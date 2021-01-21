@@ -7,7 +7,7 @@ class Complex
     double re = 0;
     double im = 0;
     public:
-    Complex() {re = 0; im = 0;}
+    Complex(double r = 0, double i = 0) {re = r; im = i;}
     Complex(Complex&);
     void Input();
     void Output();
@@ -17,19 +17,36 @@ class Complex
     Complex& operator +=(Complex&);
     Complex& operator -=(Complex&);
     Complex& operator *=(Complex&);
-    Complex* operator +(Complex&);
-    Complex* operator -(Complex&);
-    Complex* operator *(Complex&);
+    Complex operator +(Complex&);
+    Complex operator -(Complex&);
+    Complex operator *(Complex&);
     int operator ==(Complex&);
     int operator >(Complex&);
     int operator >=(Complex&);
     int operator <(Complex&);
     int operator <=(Complex&);
+    friend ostream & operator<<(ostream &r, Complex &c)
+    {
+        r << c.re;
+        if (c.im > 0) 
+        {
+            r << "+";
+        }
+        r << c.im <<'i';
+        return r;
+    }
+    friend istream & operator>>(istream &r, Complex &c)
+    {
+        cout << "input re, mi: ";
+        r >> c.re >> c.im;
+        return r;
+    }   
 };
+
 
 inline int Complex:: operator ==(Complex& a)
 {
-    if (Mod() == a.Mod())
+    if ((re == a.re)&&(im == a.im))
     {
         return 1;
     }
@@ -72,28 +89,27 @@ inline int Complex:: operator <=(Complex& a)
     return 0;   
 }
 
-inline Complex* Complex:: operator +(Complex& b)
+inline Complex Complex:: operator +(Complex& b)
 {
-    Complex *c = new Complex;
-    c->Re() = re + b.Re();
-    c->Im() = im + b.Im();
+    Complex c;
+    c.re = re + b.re;
+    c.im = im + b.im;
     return c;
 }
 
-inline Complex* Complex:: operator -(Complex& b)
+inline Complex Complex:: operator -(Complex& b)
 {
-    Complex *c = new Complex;
-    c->Re() = re - b.Re();
-    c->Im() = im - b.Im();
+    Complex c;
+    c.re = re - b.re;
+    c.im = im - b.im;
     return c;
 }
 
-inline Complex* Complex:: operator *(Complex& b)
+inline Complex Complex:: operator *(Complex& b)
 {
-    double _re = re;
-    Complex *c = new Complex;
-    c->Re() = re*b.Re() - im*b.Im();
-    c->Im() = _re*b.Im() + im*b.Re();    
+    Complex c;
+    c.re = re*b.re - im*b.im;
+    c.im = re*b.im + im*b.re;    
     return c;
 }
 
@@ -107,21 +123,21 @@ inline Complex& Complex:: operator *=(Complex& c)
 
 inline Complex:: Complex(Complex& c) 
 {
-    re = c.Re();
-    im = c.Im();
+    re = c.re;
+    im = c.im;
 }
 
 inline Complex& Complex:: operator +=(Complex& c)
 {
-    re += c.Re();
-    im += c.Im();
+    re += c.re;
+    im += c.im;
 return *this;
 }
 
 inline Complex& Complex:: operator -=(Complex& c)
 {
-    re -= c.Re();
-    im -= c.Im();
+    re -= c.re;
+    im -= c.im;
 return *this;
 }
 
@@ -168,6 +184,10 @@ int main()
     puts("");
 
     printf("|c1| %f\n", c1.Mod());
+
+    Complex c7, c8;
+    cin>>c7>>c8;
+    cout<<c7<<"\n"<<c8<<"\n";
 
 return 0;
 }
